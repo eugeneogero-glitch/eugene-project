@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Duka Ledger</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Header Navigation -->
+  <header class="header">
+    <h1>DUKA LEDGER</h1>
+  </header>
+
+  <main class="container">
+
+    <!-- Action Bar -->
+    <div class="action-bar">
+      <button id="open-modal-btn" class="btn-primary">+ Record Sale</button>
+    </div>
+
+    <!-- Summary Cards Section -->
+    <section class="summary-cards">
+      <div class="card">
+        <h3>Net Balance</h3>
+        <p class="amount">KES 32,400</p>
+      </div>
+
+      <div class="card">
+        <h3>Today's Cash In</h3>
+        <p class="amount">KES 45,200</p>
+      </div>
+
+      <div class="card">
+        <h3>Pending Debts (Deni)</h3>
+        <p class="amount alert">KES 12,800</p>
+      </div>
+    </section>
+
+    <!-- Recent Transactions Table Section -->
+    <section class="transactions-section">
+      <table class="ledger-table">
+        <thead>
+          <tr>
+            <th>Date &amp; Time</th>
+            <th>Customer / Item</th>
+            <th>Type</th>
+            <th>Amount</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>10:30 AM</td>
+            <td>Mama Kamau (Sugar 2Kg)</td>
+            <td>Credit (Deni)</td>
+            <td>KES 320</td>
+            <td><span class="badge status-unpaid">Unpaid</span></td>
+          </tr>
+          <tr>
+            <td>11:15 AM</td>
+            <td>Cash Sale (Milk &amp; Bread)</td>
+            <td>Income</td>
+            <td>KES 1,500</td>
+            <td><span class="badge status-paid">Paid</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <!-- Modal Form (Record New Sale) -->
+  <div id="sale-modal" class="modal">
+    <div class="modal-content">
+      <h2>Record New Sale</h2>
+      <form id="add-sale-form">
+        <div class="form-group">
+          <label for="customer">Customer / Item</label>
+          <input type="text" id="customer" name="customer" placeholder="e.g. Mama Kamau" required>
+        </div>
+
+        <div class="form-group">
+          <label for="item-description">Description</label>
+          <input type="text" id="item-description" name="itemDescription" placeholder="e.g. Sugar 2Kg" required>
+        </div>
+
+        <div class="form-group">
+          <label for="amount">Amount (KES)</label>
+          <input type="number" id="amount" name="amount" placeholder="e.g. 500" required>
+        </div>
+
+        <button type="submit" class="btn-submit">Save Entry</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
