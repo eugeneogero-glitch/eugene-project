@@ -58,15 +58,15 @@ saleForm.addEventListener('submit', (event) => {
   const itemDescription = document.getElementById('item-description').value;
   const amount = document.getElementById('amount').value;
 
-  // Create new transaction object
-  const newTx = {
+ // Create new transaction object
+const newTx = {
     time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     customer,
     itemDescription,
     amount,
-    type: "Cash Sale",
-    status: "Paid"
-  };
+    type: document.getElementById('type').value,
+    status: document.getElementById('status').value
+};
 
   // 4. Save to array and localStorage
   transactions.push(newTx);
