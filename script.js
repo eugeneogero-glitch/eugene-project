@@ -1,100 +1,109 @@
-// 1. Select your modal and trigger buttons 
-// (Make sure to match these IDs/classes to your actual HTML elements)
-const openModalBtn = document.getElementById('open-modal-btn'); 
-const closeModalBtn = document.getElementById('close-modal-btn'); 
+const openModalBtn = document.getElementById('open-modal-btn');
+const closeModalBtn = document.getElementById('close-modal-btn');
 const modal = document.querySelector('.modal');
-// Grab table body element
 const ledgerTableBody = document.querySelector('.ledger-table tbody');
 
-// Load existing transactions from localStorage or initialize empty array
-let transactions = JSON.parse(localStorage.getItem('dukaTransactions')) || [];
+let transactions = [];
 
-// Function to display transactions in the table
-function renderTransactions() {
-    ledgerTableBody.innerHTML = ''; // Clear hardcoded/old rows
-
-    transactions.forEach((tx, index) => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${tx.time}</td>
-            <td>${tx.customer} (${tx.itemDescription})</td>
-            <td>${tx.type}</td>
-            <td>KES ${Number(tx.amount).toLocaleString()}</td>
-            <td><span class="badge ${tx.status === 'Paid' ? 'status-paid' : 'status-unpaid'}">${tx.status}</span></td>
-            <td><button class="btn-delete" onclick="deleteTransaction(${index})">Delete</button></td>
-        `;
-        ledgerTableBody.appendChild(row);
-    });
-
-    // Recalculate dashboard totals whenever the table renders
-    updateDashboard();
+function fetchTransactions() {
+    fetch('http://localhost:3000/transactions')
+        .then(response => response.json())
+        .then(data => {
+            transactions = data;
+            renderTransactions();
+        })
+        .catch(error => console.error('Error fetching transactions:', error));
 }
-    
-// Initial render when the page loads
-renderTransactions();
 
-// 2. Open the modal (set to 'flex' so your CSS centering works!)
+function renderTransactions() {
+  ledgerTableBody.innerHTML = '';
+
+  transactions.forEach(tx => {
+    const row = document.createElement('tr');
+
+    const customerText = tx.itemDescription
+      ? `${tx.customer} (${tx.itemDescription})`
+      : tx.customer;
+
+    row.innerHTML = `
+      <td>${tx.time}</td>
+      <td>${customerText}</td>
+      <td>${tx.type}</td>
+      <td>KES ${Number(tx.amount).toLocaleString()}</td>
+      <td><span class="badge ${tx.status === 'Paid' ? 'status-paid' : 'status-unpaid'}">${tx.status}</span></td>
+      <td><button class="btn-delete" onclick="deleteTransaction(${tx.id})">Delete</button></td>
+    `;
+
+    ledgerTableBody.appendChild(row);
+  });
+
+  updateDashboard();
+}
+
+function deleteTransaction(id) {
+    fetch(`http://localhost:3000/transactions/${id}`, {
+        method: 'DELETE'
+    })
+    .then(response => {
+        if (response.ok) {
+            fetchTransactions();
+        }
+    })
+    .catch(error => console.error('Error deleting transaction:', error));
+}
+
+fetchTransactions();
+
 openModalBtn.addEventListener('click', () => {
     modal.style.display = 'flex';
 });
 
-// 3. Close the modal using the close button
 closeModalBtn.addEventListener('click', () => {
     modal.style.display = 'none';
 });
 
-// 4. Bonus: Close the modal if the user clicks anywhere on the dark backdrop outside of it
 window.addEventListener('click', (event) => {
     if (event.target === modal) {
         modal.style.display = 'none';
     }
 });
-// 1. Select the form element from your HTML
+
 const saleForm = document.getElementById('add-sale-form');
 
-// 2. Listen for the 'submit' event on the form
 saleForm.addEventListener('submit', (event) => {
-  // Prevent the default browser behavior (which reloads the page)
-  event.preventDefault();
+    event.preventDefault();
 
-  // 3. Grab input values
-  const customer = document.getElementById('customer').value;
-  const itemDescription = document.getElementById('item-description').value;
-  const amount = document.getElementById('amount').value;
+    const customer = document.getElementById('customer').value;
+    const itemDescription = document.getElementById('item-description').value;
+    const amount = Number(document.getElementById('amount').value);
+    const type = document.getElementById('type').value;
+    const status = document.getElementById('status').value;
 
- // Create new transaction object
-const newTx = {
-    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-    customer,
-    itemDescription,
-    amount,
-    type: document.getElementById('type').value,
-    status: document.getElementById('status').value
-};
+    const newTx = {
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        customer,
+        itemDescription,
+        amount,
+        type,
+        status
+    };
 
-  // 4. Save to array and localStorage
-  transactions.push(newTx);
-  localStorage.setItem('dukaTransactions', JSON.stringify(transactions));
-
-  // 5. Update UI
-  renderTransactions();
-
-  // 6. Reset form & close modal
-  saleForm.reset();
-  modal.style.display = 'none';
+    fetch('http://localhost:3000/transactions', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newTx)
+    })
+    .then(response => response.json())
+    .then(() => {
+        fetchTransactions();
+        saleForm.reset();
+        modal.style.display = 'none';
+    })
+    .catch(error => console.error('Error adding transaction:', error));
 });
-// Function to delete a transaction
-function deleteTransaction(index) {
-    // Remove the transaction from the array at this specific index
-    transactions.splice(index, 1);
-    
-    // Update localStorage
-    localStorage.setItem('dukaTransactions', JSON.stringify(transactions));
-    
-    // Re-render the table to reflect changes
-    renderTransactions();
-}
-// Function to calculate and update dashboard summary metrics
+
 function updateDashboard() {
     let totalCashIn = 0;
     let totalPending = 0;
@@ -110,7 +119,6 @@ function updateDashboard() {
 
     const netBalance = totalCashIn - totalPending;
 
-    // Update the DOM elements
     document.getElementById('net-balance').textContent = `KES ${netBalance.toLocaleString()}`;
     document.getElementById('cash-in').textContent = `KES ${totalCashIn.toLocaleString()}`;
     document.getElementById('pending-debts').textContent = `KES ${totalPending.toLocaleString()}`;

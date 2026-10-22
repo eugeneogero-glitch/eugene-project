@@ -1,0 +1,56 @@
+{
+  "transactions": [
+    {
+      "id": "1",
+      "time": "06:14 PM",
+      "customer": "Eugene (bar soap)",
+      "type": "Cash Sale",
+      "amount": 180,
+      "status": "Paid"
+    },
+    {
+      "id": "2",
+      "time": "06:42 PM",
+      "customer": "Hellen (bar soap)",
+      "type": "Credit",
+      "amount": 200,
+      "status": "Unpaid"
+    },
+    {
+      "id": "3",
+      "time": "09:43 AM",
+      "customer": "Paul (salt)",
+      "type": "Cash Sale",
+      "amount": 50,
+      "status": "Paid"
+    },
+    {
+      "time": "10:19 AM",
+      "customer": "Everlyn",
+      "itemDescription": "matchbox",
+      "amount": 40,
+      "type": "Cash Sale",
+      "status": "Paid",
+      "id": "wUSyjvbNBFA"
+    },
+    {
+      "time": "05:01 PM",
+      "customer": "Joy",
+      "itemDescription": "milk",
+      "amount": 100,
+      "type": "Cash Sale",
+      "status": "Paid",
+      "id": "Pnl9A7MuhV8"
+    },
+    {
+      "time": "05:08 PM",
+      "customer": "Kelvin ",
+      "itemDescription": "omo",
+      "amount": 10,
+      "type": "Credit",
+      "status": "Unpaid",
+      "id": "HtYYjJC70M0"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
