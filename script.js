@@ -11,21 +11,23 @@ let transactions = JSON.parse(localStorage.getItem('dukaTransactions')) || [];
 
 // Function to display transactions in the table
 function renderTransactions() {
-  ledgerTableBody.innerHTML = ''; // Clear hardcoded/old rows
+    ledgerTableBody.innerHTML = ''; // Clear hardcoded/old rows
 
-  transactions.forEach((tx) => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${tx.time}</td>
-      <td>${tx.customer} (${tx.itemDescription})</td>
-      <td>${tx.type}</td>
-      <td>KES ${Number(tx.amount).toLocaleString()}</td>
-      <td><span class="badge ${tx.status === 'Paid' ? 'status-paid' : 'status-unpaid'}">${tx.status}</span></td>
-      <td><button class="btn-delete" onclick="deleteTransaction(${index})">Delete</button></td>
-    `;
-    ledgerTableBody.appendChild(row);
-  });
-}
+    transactions.forEach((tx, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${tx.time}</td>
+            <td>${tx.customer} (${tx.itemDescription})</td>
+            <td>${tx.type}</td>
+            <td>KES ${Number(tx.amount).toLocaleString()}</td>
+            <td><span class="badge ${tx.status === 'Paid' ? 'status-paid' : 'status-unpaid'}">${tx.status}</span></td>
+            <td><button class="btn-delete" onclick="deleteTransaction(${index})">Delete</button></td>
+        `;
+        ledgerTableBody.appendChild(row);
+    });
+
+    // Recalculate dashboard totals whenever the table renders
+    updateDashboard();
 
 // Initial render when the page loads
 renderTransactions();
@@ -90,4 +92,25 @@ function deleteTransaction(index) {
     
     // Re-render the table to reflect changes
     renderTransactions();
+}
+// Function to calculate and update dashboard summary metrics
+function updateDashboard() {
+    let totalCashIn = 0;
+    let totalPending = 0;
+
+    transactions.forEach(tx => {
+        const amount = Number(tx.amount) || 0;
+        if (tx.status === 'Paid') {
+            totalCashIn += amount;
+        } else if (tx.status === 'Unpaid') {
+            totalPending += amount;
+        }
+    });
+
+    const netBalance = totalCashIn - totalPending;
+
+    // Update the DOM elements
+    document.getElementById('net-balance').textContent = `KES ${netBalance.toLocaleString()}`;
+    document.getElementById('cash-in').textContent = `KES ${totalCashIn.toLocaleString()}`;
+    document.getElementById('pending-debts').textContent = `KES ${totalPending.toLocaleString()}`;
 }
