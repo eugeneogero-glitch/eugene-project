@@ -208,3 +208,27 @@ body {
 .btn-submit:hover {
   background-color: #16A34A;
 }
+/* --- Responsive Mobile & Tablet Styles --- */
+@media (max-width: 768px) {
+  .header {
+    padding: 15px 20px;
+  }
+
+  .container {
+    padding: 20px 15px;
+  }
+
+  .summary-cards {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .transactions-section {
+    overflow-x: auto; /* Allows horizontal swipe on mobile tables */
+  }
+
+  .modal-content {
+    width: 90%;
+    padding: 20px;
+  }
+}
