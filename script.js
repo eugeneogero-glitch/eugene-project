@@ -28,7 +28,8 @@ function renderTransactions() {
 
     // Recalculate dashboard totals whenever the table renders
     updateDashboard();
-
+}
+    
 // Initial render when the page loads
 renderTransactions();
 
