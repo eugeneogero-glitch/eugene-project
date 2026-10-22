@@ -21,6 +21,7 @@ function renderTransactions() {
       <td>${tx.type}</td>
       <td>KES ${Number(tx.amount).toLocaleString()}</td>
       <td><span class="badge ${tx.status === 'Paid' ? 'status-paid' : 'status-unpaid'}">${tx.status}</span></td>
+      <td><button class="btn-delete" onclick="deleteTransaction(${index})">Delete</button></td>
     `;
     ledgerTableBody.appendChild(row);
   });
@@ -79,3 +80,14 @@ const newTx = {
   saleForm.reset();
   modal.style.display = 'none';
 });
+// Function to delete a transaction
+function deleteTransaction(index) {
+    // Remove the transaction from the array at this specific index
+    transactions.splice(index, 1);
+    
+    // Update localStorage
+    localStorage.setItem('dukaTransactions', JSON.stringify(transactions));
+    
+    // Re-render the table to reflect changes
+    renderTransactions();
+}
