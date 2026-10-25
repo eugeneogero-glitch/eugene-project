@@ -1,5 +1,7 @@
 # Duka Ledger
-![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)(https://eugeneogero-glitch.github.io/eugene-project/)
+
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://eugeneogero-glitch.github.io/eugene-project/)
+
 Duka Ledger is a lightweight, local-first web application built for small retail shop owners (*dukas* and *kibandas*) in Kenya. It simplifies daily ledger accounting by providing real-time tracking of cash sales, monitoring pending customer credits (*deni*), and calculating net balances dynamically.
 
 
