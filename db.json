@@ -50,6 +50,24 @@
       "type": "Credit",
       "status": "Unpaid",
       "id": "HtYYjJC70M0"
+    },
+    {
+      "time": "09:14 AM",
+      "customer": "Gibson",
+      "itemDescription": "biro pen",
+      "amount": 10,
+      "type": "Cash Sale",
+      "status": "Paid",
+      "id": "ZyzDCNeHiAc"
+    },
+    {
+      "time": "09:32 PM",
+      "customer": "Samuel",
+      "itemDescription": "salt 1kg",
+      "amount": 80,
+      "type": "Credit",
+      "status": "Unpaid",
+      "id": "sliG-GWT7wc"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
