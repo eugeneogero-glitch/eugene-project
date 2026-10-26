@@ -70,7 +70,6 @@ Because Duka Ledger relies on a local REST API backend for full CRUD data persis
    Open index.html using the live extension in VS code.
    Or simply double-click index.html to open it in your browser.
 
-   Author
-   Eugene Osano Ogero
-   eugeneogero-glitch
+   ## Author
+  * **Eugene Osano Ogero** - [eugeneogero-glitch](https://github.com/eugeneogero-glitch)
 
