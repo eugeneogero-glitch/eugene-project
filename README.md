@@ -60,13 +60,17 @@ Because Duka Ledger relies on a local REST API backend for full CRUD data persis
    git clone https://github.com/eugeneogero-glitch/eugene-project.git
    cd eugene-project
    ```
-  2. Start the backened JSON server:
+   2. Install dependencies
+   ```bash
+   npm install
+   ```
+  3. Start the backened JSON server:
   ```bash
    npx json-server --watch db.json
 ```
   > Important: Keep this terminal window running in the background so the application can communicate with the backend.
 
-   3. Launch the Frontend Application:
+   4. Launch the Frontend Application:
    Open index.html using the live extension in VS code.
    Or simply double-click index.html to open it in your browser.
 
