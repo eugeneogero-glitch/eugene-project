@@ -57,5 +57,5 @@ Because Duka Ledger relies on a local REST API backend for full CRUD data persis
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/eugeneogero-glitch/eugene-project.git](https://github.com/eugeneogero-glitch/eugene-project.git)
+   git clone https://github.com/eugeneogero-glitch/eugene-project.git
    cd eugene-project
